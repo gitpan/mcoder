@@ -1,6 +1,6 @@
 package mcoder;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 use strict;
 use warnings;
@@ -229,6 +229,75 @@ generates methods that set or unset a boolean property
 =head2 EXPORT
 
 whatever you ask ;-)
+
+=head1 ALTERNATIVES FROM CPAN
+
+Somebody asked me why he should prefer C<mcoder> over any other
+similar package from CPAN. Well, there are mostly two reasons:
+
+=over 4
+
+=item 1 - a matter of style
+
+C<mcoder> generates methods as I use to, following my personal style:
+
+=over 4
+
+=item - different methods for read/write access,
+i.e. C<slot>/C<set_slot>
+
+=item - boolean properties have set/unset methods that don't take
+arguments at all.
+
+=item - calculated (or cached or lazy) attributes.
+
+=back
+
+(C<mcoder> is the result of a big application cleanup when at some
+point I notice that I was coding too many simple methods always the
+same. That's also why I didn't use any other module from CPAN: I need
+the generated methods to be drop in replacements for the old ones that
+I had manually coded)
+
+=item 2 - a short name and simple syntax
+
+"mcoder" is a pretty short name, and you would like it even if it is
+a little cryptic.
+
+The "sugar" sub-modules allow for a simpler syntax, i.e.:
+
+  use mcoder::proxy sleeper => qw(weakup sleep);
+
+=back
+
+Other similar modules from CPAN that you would like to considered are:
+
+=over 4
+
+=item * L<Class::MethodMaker>
+
+This module is able to generate everything you would ever need!
+
+=item * L<Class::MakeMethods>
+
+This module is to complex for what it does. In my opinion it doesn't
+worth the trouble of learning to use it.
+
+=item * L<Class::AccessorMaker>
+
+-
+
+=item * L<Class::Accessor>
+
+-
+
+=item * L<accessors>
+
+very simple, and has yet another different style for accessors!
+
+=back
+
+
 
 =head1 SEE ALSO
 

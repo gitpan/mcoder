@@ -1,5 +1,9 @@
 Revision history for Perl extension mcoder.
 
+0.05  Sep 19 2003
+	- "Why you should use mcoder instead of * also from CPAN"
+	  added to the docs
+
 0.04  Sep 18 2003
 	- support for bool_set and bool_unset
 
