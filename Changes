@@ -1,5 +1,8 @@
 Revision history for Perl extension mcoder.
 
+0.04  Sep 18 2003
+	- support for bool_set and bool_unset
+
 0.03  Sep 18 2003
 	- corrected import methods for mcoder::*
 	- new test for mcoder::*

@@ -1,6 +1,6 @@
 package mcoder;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 use strict;
 use warnings;
@@ -66,6 +66,10 @@ sub export_accessor {
 		$name='set_'.$name;
 		$def="\$_[0]->$attr=\$_[1]";
 	    }
+	    elsif ($type eq 'bool_set') {
+		$name='set_'.$name;
+		$def="\$_[0]->$attr=(\@_>1 ? \$_[1] : 1)";
+	    }
 	    elsif ($type eq 'calculated') {
 		$def="my \$t=shift; "
 		    ."if (defined \$t->$attr) { \$t->$attr } "
@@ -77,7 +81,11 @@ sub export_accessor {
 	    }
 	    elsif ($type eq 'undef') {
 		$name='undef_'.$name;
-		$def="\$_[0]->$attr = undef"
+		$def="\$_[0]->$attr=undef";
+	    }
+	    elsif ($type eq 'bool_unset') {
+		$name='unset_'.$name;
+		$def="\$_[0]->$attr=undef";
 	    }
 	    else {
 		die "internal error"
@@ -108,6 +116,8 @@ sub export_new {
 	  # accesor => \&export_accesor,
 	  set => \&export_accessor,
 	  get => \&export_accessor,
+	  bool_unset => \&export_accessor,
+	  bool_set => \&export_accessor,
 	  calculated => \&export_accessor,
 	  delete => \&export_accessor,
 	  undef => \&export_accessor,
@@ -200,6 +210,19 @@ forward method calls to C<$self-E<gt>$delegate-E<gt>$del_method>
   use mcoder new => $name;
 
 generates a simple constructor for a hash based object
+
+=item bool_set
+
+=item bool_unset
+
+  use mcoder bool_unset => $name;
+  use mcoder bool_unset => { $name1 => $attr1, $name2 => $attr2, ... };
+  use mcoder bool_unset => [$name1, $name2, $name3, ...];
+  use mcoder bool_unset => $name;
+  use mcoder bool_unset => { $name1 => $attr1, $name2 => $attr2, ... };
+  use mcoder bool_unset => [$name1, $name2, $name3, ...];
+
+generates methods that set or unset a boolean property
 
 =back
 

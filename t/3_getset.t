@@ -4,7 +4,8 @@ package One;
 
 use mcoder new => qw(new),
     [qw(set get)] => [qw(runner walker)],
-    [qw(calculated delete undef set)] => qw(weight);
+    [qw(calculated delete undef set)] => qw(weight),
+    [qw(bool_set bool_unset get)] => qw(is_good);
 
 
 sub _calculate_weight {
@@ -13,7 +14,7 @@ sub _calculate_weight {
 
 package testing;
 
-use Test::More tests => 9;
+use Test::More tests => 12;
 
 my $o;
 ok($o=One->new(walker=>'lucas grihander'), 'constructor');
@@ -40,3 +41,12 @@ is($o->set_runner('pecador'), 'pecador', 'set');
 is($o->walker, 'lucas grihander', 'get after ctor');
 
 is($o->runner, 'pecador', 'cobarde, pecador, aigg!');
+
+$o->set_is_good;
+ok($o->is_good, 'good');
+
+$o->unset_is_good;
+ok(!$o->is_good, 'bad');
+
+$o->set_is_good(4);
+is($o->is_good, 4, 'good 4');
