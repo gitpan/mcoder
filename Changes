@@ -1,5 +1,12 @@
 Revision history for Perl extension mcoder.
 
+0.07  Sep 19 2003
+	- corrected buf in mcoder::calculated
+	- MANIFEST corrected
+
+0.06  Sep 19 2003
+	- added mcoder::bool::set and mcoder::bool::unset modules
+
 0.05  Sep 19 2003
 	- "Why you should use mcoder instead of * also from CPAN"
 	  added to the docs

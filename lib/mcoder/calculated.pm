@@ -1,6 +1,6 @@
 package mcoder::calculated;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 use strict;
 use warnings;
@@ -8,7 +8,8 @@ use warnings;
 require mcoder;
 
 sub import {
-    @_='calculated', [@_];
+    my $class=shift;
+    @_=($class, 'calculated', [@_]);
     goto &mcoder::import
 }
 

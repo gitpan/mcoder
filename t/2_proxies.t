@@ -2,7 +2,7 @@ package Other;
 
 sub run { "running" }
 
-sub talk { shift; join('-', talk, @_) }
+sub talk { shift; join('-', 'talk', @_) }
 
 sub new { bless {}, shift }
 
