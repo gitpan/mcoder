@@ -1,3 +1,5 @@
+# -*- Mode: Perl -*-
+
 package One;
 
 # BEGIN {$mcoder::debug=1}
@@ -5,8 +7,10 @@ package One;
 use mcoder new => qw(new),
     [qw(set get)] => [qw(runner walker)],
     [qw(calculated delete undef set)] => qw(weight),
-    [qw(bool_set bool_unset get)] => qw(is_good);
+    [qw(bool_set bool_unset get)] => qw(is_good),
+    calculated_array => qw(sons);
 
+sub _calculate_sons { qw(melany john eneko) }
 
 sub _calculate_weight {
     return 70;
@@ -14,12 +18,13 @@ sub _calculate_weight {
 
 package testing;
 
-use Test::More tests => 12;
+use Test::More tests => 15;
 
 my $o;
 ok($o=One->new(walker=>'lucas grihander'), 'constructor');
 
 is($o->weight, 70, "weight");
+is($o->weight, 70, "weight cached");
 
 is($o->set_weight(50), 50, "set_weight");
 
@@ -50,3 +55,6 @@ ok(!$o->is_good, 'bad');
 
 $o->set_is_good(4);
 is($o->is_good, 4, 'good 4');
+
+is_deeply([$o->sons], [qw(melany john eneko)], 'sons');
+is_deeply([$o->sons], [qw(melany john eneko)], 'sons cached');

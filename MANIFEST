@@ -4,6 +4,7 @@ lib/mcoder/set.pm
 lib/mcoder/get.pm
 lib/mcoder/proxy.pm
 lib/mcoder/calculated.pm
+lib/mcoder/calculated_array.pm
 lib/mcoder/bool/set.pm
 lib/mcoder/bool/unset.pm
 Makefile.PL

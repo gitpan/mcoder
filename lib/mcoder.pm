@@ -1,6 +1,6 @@
 package mcoder;
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 use strict;
 use warnings;
@@ -75,6 +75,11 @@ sub export_accessor {
 		    ."if (defined \$t->$attr) { \$t->$attr } "
 			."else { \$t->$attr=\$t->_calculate_$name }";
 	    }
+	    elsif ($type eq 'calculated_array') {
+		$def="my \$t=shift; "
+		    ."if (defined \$t->$attr) { \@{\$t->$attr} } "
+			."else { my \@a=\$t->_calculate_$name; \$t->$attr=\\\@a; \@a }";
+	    }
 	    elsif ($type eq 'delete') {
 		$name='delete_'.$name;
 		$def="my \$t=shift; exists \$t->$attr and delete \$t->$attr";
@@ -119,6 +124,7 @@ sub export_new {
 	  bool_unset => \&export_accessor,
 	  bool_set => \&export_accessor,
 	  calculated => \&export_accessor,
+	  calculated_array => \&export_accessor,
 	  delete => \&export_accessor,
 	  undef => \&export_accessor,
 	  new => \&export_new );
@@ -176,13 +182,17 @@ generate write accessors named as C<set_$name>.
 
 =item calculated
 
-  use mcoder set => $name;
-  use mcoder set => { $name1 => $attr1, $name2 => $attr2, ... };
-  use mcoder set => [$name1, $name2, $name3, ...];
+  use mcoder calculated => $name;
+  use mcoder calculated => { $name1 => $attr1, $name2 => $attr2, ... };
+  use mcoder calculated => [$name1, $name2, $name3, ...];
 
 similar to read accessors (C<set>) but when the value is unexistant,
 method C<_calculate_$name> is called and its result cached.
 
+=item calculated_array
+
+similar to C<calculated> but caches an array of values instead of a
+single value.
 
 =item proxy
 
@@ -280,7 +290,7 @@ This module is able to generate everything you would ever need!
 
 =item * L<Class::MakeMethods>
 
-This module is to complex for what it does. In my opinion it doesn't
+This module is too complex for what it does. In my opinion it doesn't
 worth the trouble of learning to use it.
 
 =item * L<Class::AccessorMaker>

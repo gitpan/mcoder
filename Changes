@@ -1,5 +1,10 @@
 Revision history for Perl extension mcoder.
 
+0.08  Apr 06 2005
+	- added support for calculated_array methods
+	- some typos in the docs corrected
+	- some new tests for calculated methods
+
 0.07  Sep 19 2003
 	- corrected buf in mcoder::calculated
 	- MANIFEST corrected

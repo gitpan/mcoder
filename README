@@ -1,5 +1,5 @@
-mcoder version
-==============
+mcoder
+======
 
 mcoder generates methods from common templates (constructors, proxies,
 accessors, etc.).
