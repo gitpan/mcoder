@@ -1,6 +1,6 @@
 package mcoder::get;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 use strict;
 use warnings;
@@ -8,7 +8,8 @@ use warnings;
 require mcoder;
 
 sub import {
-    @_='get', [@_];
+    my $class=shift;
+    @_=($class, 'get', [@_]);
     goto &mcoder::import
 }
 

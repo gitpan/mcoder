@@ -1,15 +1,16 @@
-package code::proxy;
+package mcoder::proxy;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 use strict;
 use warnings;
 
-require code;
+require mcoder;
 
 sub import {
-    @_='proxy', [@_];
-    goto &code::import
+    my $class=shift;
+    @_=($class, 'proxy', [@_]);
+    goto &mcoder::import
 }
 
 1;
@@ -18,20 +19,20 @@ __END__
 
 =head1 NAME
 
-code::proxy - Perl extension for proxy methods generation
+mcoder::proxy - Perl extension for proxy methods generation
 
 =head1 SYNOPSIS
 
-  use code::proxy legs => qw(run walk jump);
+  use mcoder::proxy legs => qw(run walk jump);
   # is equivalent to...
   # sub run { shift->legs->run(@_) };
   # sub walk { shift->legs->walk(@_) };
   # sub jump { shift->legs->jump(@_) };
 
-  use code::proxy q({_cutter}) => qw(cut);
+  use mcoder::proxy q({_cutter}) => qw(cut);
   # sub cut { shift->{_cutter}->cut(@_) };
 
-  use code::proxy coder => { code_c => 'code' };
+  use mcoder::proxy coder => { code_c => 'code' };
   # sub code_c { shift->coder->code(@_) };
 
 =head1 ABSTRACT

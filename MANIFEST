@@ -10,3 +10,4 @@ README
 t/1_use.t
 t/2_proxies.t
 t/3_getset.t
+t/4_sugar.t

@@ -1,6 +1,11 @@
 Revision history for Perl extension mcoder.
 
-0.02  Sep 18
+0.03  Sep 18 2003
+	- corrected import methods for mcoder::*
+	- new test for mcoder::*
+	- bad package name on mcoder::proxy corrected
+
+0.02  Sep 18 2003
 	- README updated
 	- module name changed to mcoder
 
