@@ -1,0 +1,9 @@
+Revision history for Perl extension mcoder.
+
+0.02
+	- module name changed to mcoder
+
+0.01  Wed Sep 17 16:41:19 2003
+	- original version; created by h2xs 1.22 with options
+		-AX -n code
+

@@ -1,0 +1,12 @@
+Changes
+lib/mcoder.pm
+lib/mcoder/set.pm
+lib/mcoder/get.pm
+lib/mcoder/proxy.pm
+lib/mcoder/calculated.pm
+Makefile.PL
+MANIFEST
+README
+t/1_use.t
+t/2_proxies.t
+t/3_getset.t
