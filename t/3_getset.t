@@ -8,7 +8,8 @@ use mcoder new => qw(new),
     [qw(set get)] => [qw(runner walker)],
     [qw(calculated delete undef set)] => qw(weight),
     [qw(bool_set bool_unset get)] => qw(is_good),
-    calculated_array => qw(sons);
+    calculated_array => q(sons),
+    virtual => q(dont);
 
 sub _calculate_sons { qw(melany john eneko) }
 

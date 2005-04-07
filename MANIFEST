@@ -7,6 +7,7 @@ lib/mcoder/calculated.pm
 lib/mcoder/calculated_array.pm
 lib/mcoder/bool/set.pm
 lib/mcoder/bool/unset.pm
+lib/mcoder/virtual.pm
 Makefile.PL
 MANIFEST
 README

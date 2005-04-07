@@ -1,6 +1,6 @@
 package mcoder;
 
-our $VERSION = '0.08';
+our $VERSION = '0.09';
 
 use strict;
 use warnings;
@@ -92,6 +92,9 @@ sub export_accessor {
 		$name='unset_'.$name;
 		$def="\$_[0]->$attr=undef";
 	    }
+	    elsif ($type eq 'virtual') {
+		$def=qq(Carp::croak("undefined virtual method called (".\$_[0]."->$name)"))
+	    }
 	    else {
 		die "internal error"
 	    }
@@ -117,6 +120,11 @@ sub export_new {
     }
 }
 
+sub export_virtual {
+    shift;
+    
+}
+
 %mcoder=( proxy => \&export_proxy,
 	  # accesor => \&export_accesor,
 	  set => \&export_accessor,
@@ -127,7 +135,8 @@ sub export_new {
 	  calculated_array => \&export_accessor,
 	  delete => \&export_accessor,
 	  undef => \&export_accessor,
-	  new => \&export_new );
+	  new => \&export_new,
+	  virtual => \&export_accessor );
 
 1;
 __END__
@@ -233,6 +242,13 @@ generates a simple constructor for a hash based object
   use mcoder bool_unset => [$name1, $name2, $name3, ...];
 
 generates methods that set or unset a boolean property
+
+=item virtual
+
+  use mcoder virtual => $name;
+  use mcoder virtual => [$name, ...];
+
+the method throws an error when called.
 
 =back
 
