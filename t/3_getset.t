@@ -8,7 +8,7 @@ use mcoder new => qw(new),
     [qw(set get)] => [qw(runner walker)],
     [qw(calculated delete undef set)] => qw(weight),
     [qw(bool_set bool_unset get)] => qw(is_good),
-    calculated_array => q(sons),
+    [qw(array_set array_calculated)] => qw(sons),
     virtual => q(dont);
 
 sub _calculate_sons { qw(melany john eneko) }
@@ -19,7 +19,7 @@ sub _calculate_weight {
 
 package testing;
 
-use Test::More tests => 15;
+use Test::More tests => 16;
 
 my $o;
 ok($o=One->new(walker=>'lucas grihander'), 'constructor');
@@ -59,3 +59,6 @@ is($o->is_good, 4, 'good 4');
 
 is_deeply([$o->sons], [qw(melany john eneko)], 'sons');
 is_deeply([$o->sons], [qw(melany john eneko)], 'sons cached');
+
+$o->set_sons;
+is_deeply([$o->sons], [], 'empty sons');

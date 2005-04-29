@@ -1,3 +1,4 @@
+# -*- Mode: Perl -*-
 
 package Legs;
 sub run { "running" };
@@ -12,10 +13,12 @@ use mcoder::set qw(legs arms);
 use mcoder::bool::set qw(fast good);
 use mcoder::bool::unset qw(fast good);
 use mcoder new => 'new';
+use mcoder::array::get qw(sons);
+use mcoder::array::set qw(sons);
 
 package testing;
 
-use Test::More tests => 9;
+use Test::More tests => 11;
 
 my $l;
 ok ($l=Legs->new(), "new legs");
@@ -41,3 +44,9 @@ ok($m->good, "good");
 
 $m->set_good(0);
 ok(!$m->good, "bad");
+
+is_deeply([$m->sons], [], 'undefined sons');
+
+my @sons=qw(foo bar son1 pepe);
+$m->set_sons(@sons);
+is_deeply([$m->sons], \@sons, 'sons')

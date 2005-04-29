@@ -1,6 +1,6 @@
 package mcoder;
 
-our $VERSION = '0.09';
+our $VERSION = '0.10';
 
 use strict;
 use warnings;
@@ -20,7 +20,7 @@ sub import {
 
 	for my $k (@kind) {
 	    exists $mcoder{$k} or
-		croak "unknow coder type '$k'";
+		croak "unknow mcoder type '$k'";
 	    &{$mcoder{$k}}($k, @args)
 	}
     }
@@ -62,9 +62,16 @@ sub export_accessor {
 	    if ($type eq 'get') {
 		$def="\$_[0]->$attr";
 	    }
+	    elsif ($type eq 'array_get') {
+		$def="\@{(\$_[0]->$attr)||[]}";
+	    }
 	    elsif ($type eq 'set') {
 		$name='set_'.$name;
 		$def="\$_[0]->$attr=\$_[1]";
+	    }
+	    elsif ($type eq 'array_set') {
+		$name='set_'.$name;
+		$def="my \$t=shift; \$t->$attr=\\\@_";
 	    }
 	    elsif ($type eq 'bool_set') {
 		$name='set_'.$name;
@@ -75,7 +82,7 @@ sub export_accessor {
 		    ."if (defined \$t->$attr) { \$t->$attr } "
 			."else { \$t->$attr=\$t->_calculate_$name }";
 	    }
-	    elsif ($type eq 'calculated_array') {
+	    elsif ($type eq 'array_calculated') {
 		$def="my \$t=shift; "
 		    ."if (defined \$t->$attr) { \@{\$t->$attr} } "
 			."else { my \@a=\$t->_calculate_$name; \$t->$attr=\\\@a; \@a }";
@@ -96,7 +103,7 @@ sub export_accessor {
 		$def=qq(Carp::croak("undefined virtual method called (".\$_[0]."->$name)"))
 	    }
 	    else {
-		die "internal error"
+		die "internal error (unknow type $type)"
 	    }
 	    my $def1= "sub ${caller}::${name} { $def }";
 	    carp "mcoder def >> $def1" if $debug;
@@ -128,11 +135,13 @@ sub export_virtual {
 %mcoder=( proxy => \&export_proxy,
 	  # accesor => \&export_accesor,
 	  set => \&export_accessor,
+	  array_set => \&export_accessor,
 	  get => \&export_accessor,
+	  array_get => \&export_accessor,
 	  bool_unset => \&export_accessor,
 	  bool_set => \&export_accessor,
 	  calculated => \&export_accessor,
-	  calculated_array => \&export_accessor,
+	  array_calculated => \&export_accessor,
 	  delete => \&export_accessor,
 	  undef => \&export_accessor,
 	  new => \&export_new,
@@ -198,7 +207,7 @@ generate write accessors named as C<set_$name>.
 similar to read accessors (C<set>) but when the value is unexistant,
 method C<_calculate_$name> is called and its result cached.
 
-=item calculated_array
+=item array_calculated
 
 similar to C<calculated> but caches an array of values instead of a
 single value.

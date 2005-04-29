@@ -1,4 +1,4 @@
-package mcoder::calculated_array;
+package mcoder::array::get;
 
 our $VERSION = '0.01';
 
@@ -9,7 +9,7 @@ require mcoder;
 
 sub import {
     my $class=shift;
-    @_=($class, 'calculated_array', [@_]);
+    @_=($class, 'array_get', [@_]);
     goto &mcoder::import
 }
 
@@ -18,22 +18,18 @@ __END__
 
 =head1 NAME
 
-mcoder::calculated_array - Perl extension for calculated_array method generation
+mcoder::array::get - Perl extension for array_get method generation
 
 =head1 SYNOPSIS
 
-  use mcoder::calculated_array qw(runners walkers jumpers);
-  use mcoder::calculated_array { coders => '_coders' };
+  use mcoder::array::get qw(runners walkers jumpers);
+  use mcoder::array::get { coders => '_coders' };
 
-  sub _calculate_runners { qw(one two three) }
-  sub _calculate_walkers { ... }
-  sub _calculate_jumpers { ... }
-  sub _calculate_coders { ... }
+  my @coders = $this->coders;
 
 =head1 ABSTRACT
 
-create get methods to retrieve object attributes that automatically
-call a _calculate_* method when the attribute doesn' exist.
+create get methods to retrieve object array attributes.
 
 =head1 DESCRIPTION
 
